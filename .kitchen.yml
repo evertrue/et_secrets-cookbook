@@ -27,5 +27,12 @@ platforms:
 suites:
   - name: default
     run_list:
+      - recipe[zookeeper::default]
+      - recipe[zookeeper::service]
       - recipe[et_secrets::default]
     attributes:
+      vault:
+        config:
+          backend:
+            zookeeper:
+              address: localhost:2181
