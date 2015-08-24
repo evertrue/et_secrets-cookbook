@@ -15,6 +15,7 @@ node.set['vault']['config']['backend'] = {
     advertise_addr: 'http://localhost:8200'
   }
 }
+node.set['vault']['config']['listener']['tcp']['tls_disable'] = 1
 node.set['vault']['manage_certificate'] = false
 
 directory File.dirname node['vault']['config_path']
