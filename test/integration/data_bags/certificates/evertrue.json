@@ -1,0 +1,6 @@
+{
+  "id": "evertrue",
+  "key": "-----BEGIN RSA PRIVATE KEY-----\n-----END RSA PRIVATE KEY-----\n",
+  "cert": "-----BEGIN CERTIFICATE-----\n-----END CERTIFICATE-----\n",
+  "chain": "-----BEGIN CERTIFICATE-----\n-----END CERTIFICATE-----\n"
+}

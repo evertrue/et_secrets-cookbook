@@ -9,3 +9,4 @@ version          '0.2.0'
 supports 'ubuntu', '>= 14.04'
 
 depends 'hashicorp-vault'
+depends 'certificate', '~> 0.5'

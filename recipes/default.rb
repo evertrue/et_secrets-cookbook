@@ -13,4 +13,11 @@ node.set['vault']['config']['backend_options'] = {
   advertise_addr: "http://#{node['fqdn']}:8200"
 }
 
+certificate_manage 'evertrue' do
+  cert_path  '/etc/ssl'
+  cert_file  'STAR.evertrue.com.pem'
+  key_file   'evertrue.key'
+  chain_file 'gd-bundle.crt'
+end
+
 include_recipe 'hashicorp-vault::default'
