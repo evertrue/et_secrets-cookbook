@@ -15,6 +15,4 @@ node.set['vault']['config']['backend'] = {
   }
 }
 
-directory File.dirname node['vault']['config_path']
-
 include_recipe 'et_hashicorp-vault::default'
