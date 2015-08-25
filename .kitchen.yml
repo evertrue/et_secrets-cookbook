@@ -13,7 +13,7 @@ driver:
 
 provisioner:
   name: chef_zero
-  config_rb:
+  client_rb:
     environment: dev
 
 platforms:
