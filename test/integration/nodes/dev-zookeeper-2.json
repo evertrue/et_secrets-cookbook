@@ -1,0 +1,13 @@
+{
+  "name": "dev-zookeeper-2",
+  "chef_environment": "dev",
+  "automatic": {
+    "fqdn": "dev-zookeeper-2.vagrantup.com",
+    "roles": [
+      "zookeeper"
+    ]
+  },
+  "run_list": [
+    "role[zookeeper]"
+  ]
+}
