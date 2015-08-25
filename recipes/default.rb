@@ -12,7 +12,7 @@ node.set['vault']['version'] = '0.2.0'
 node.set['vault']['config']['backend'] = {
   zookeeper: {
     address: zk_hosts.join(','),
-    advertise_addr: 'http://localhost:8200'
+    advertise_addr: "http://#{node['fqdn']}:8200"
   }
 }
 node.set['vault']['config']['listener']['tcp']['tls_disable'] = 1
