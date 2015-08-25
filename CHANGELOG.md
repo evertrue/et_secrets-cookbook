@@ -8,6 +8,13 @@ This is the Changelog for the et_secrets cookbook.
 
 ### Fixes
 
+## v0.2.0 - (2015-08-25)
+
+### Changes
+
+* Switch to using as-yet-unreleased version of the official `hashicorp-vault` cookbook, instead of our fork (which likely will wither & die)
+* Add integration test for `advertise_addr`
+
 ## v0.1.1 - (2015-08-25)
 
 ### Fixes
