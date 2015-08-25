@@ -7,10 +7,8 @@ This is the Changelog for the et_secrets cookbook.
 
 ### Fixes
 
-## v0.0.1 - (YYYY-MM-DD)
+## v0.1.0 - (2015-08-25)
 
 ### Added
 
-### Changed
-
-### Removed
+* Initial release
