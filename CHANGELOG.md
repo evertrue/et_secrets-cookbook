@@ -1,4 +1,5 @@
-et_secrets CHANGELOG
+# et_secrets CHANGELOG
+
 This is the Changelog for the et_secrets cookbook.
 
 ## [Unreleased][unreleased]
