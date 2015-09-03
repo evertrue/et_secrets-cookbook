@@ -8,6 +8,13 @@ This is the Changelog for the et_secrets cookbook.
 
 ### Fixes
 
+## v1.0.0 - (2015-09-03)
+
+### Changes
+
+* Bumping to v1.0.0 to reflect introduction to prod
+* Add Vault policies as JSON files, though they are not yet used by this cookbook for anything
+
 ## v0.2.0 - (2015-08-25)
 
 ### Changes
