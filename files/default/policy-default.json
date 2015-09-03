@@ -1,0 +1,10 @@
+{
+  "path": {
+    "secret/global/*": {
+      "policy": "read"
+    },
+    "secret/default/*": {
+      "policy": "read"
+    }
+  }
+}
