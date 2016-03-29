@@ -1,0 +1,10 @@
+options {
+  directory "/var/cache/bind";
+  forwarders { 172.16.0.23; };
+
+  dnssec-validation no;
+  dnssec-enable no;
+
+  auth-nxdomain no;    # conform to RFC1035
+  listen-on-v6 { any; };
+};

@@ -1,4 +1,6 @@
 require 'spec_helper'
+require 'json'
+require 'net/http'
 
 describe 'et_secrets::default' do
   context 'has a running instance of Vault' do
@@ -9,15 +11,29 @@ describe 'et_secrets::default' do
   end
 
   context 'has the correct Vault config' do
-    describe file '/home/vault/.vault.json' do
+    describe file '/etc/vault/vault.json' do
       describe '#content' do
         subject { super().content }
-        it { is_expected.to match %r{"advertise_addr": "http://ip-(.+?).ec2.internal:8200"} }
-        it do
-          is_expected.to include 'dev-zookeeper-1.vagrantup.com:2181,' \
-                                 'dev-zookeeper-2.vagrantup.com:2181'
-        end
+        it { is_expected.to include '"tls_disable": "true"' }
+        it { is_expected.to match(/"backend": {\s+"consul"/) }
       end
+    end
+  end
+
+  describe 'Responses' do
+    let(:resolv) { Resolv::DNS.new nameserver_port: %w(127.0.0.1) }
+    let(:my_ip) do
+      Socket.ip_address_list.find { |intf| intf.ipv4? && !intf.ipv4_loopback? }.ip_address
+    end
+
+    it 'Vault is unsealed' do
+      expect(
+        JSON.parse(Net::HTTP.get(URI('http://localhost:8200/v1/sys/seal-status')))['sealed']
+      ).to eq false
+    end
+
+    it 'Consul can resolve Vault with DNS' do
+      expect(resolv.getaddress('vault.service.consul.').to_s == my_ip)
     end
   end
 end

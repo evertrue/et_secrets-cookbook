@@ -32,4 +32,11 @@ suites:
       tags:
         Name: et_secrets_default_ubuntu_1404
     run_list:
+      - recipe[et_consul::server]
       - recipe[et_secrets::default]
+      - recipe[vault_init::default]
+      - recipe[tiny_bind::default]
+    attributes:
+      consul:
+        config:
+          bootstrap_expect: 1
