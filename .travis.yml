@@ -1,9 +1,34 @@
 language: ruby
-cache: bundler
+cache:
+  directories:
+  - "$HOME/.berkshelf"
+addons:
+  apt:
+    sources:
+    - chef-stable-precise
+    packages:
+    - chefdk
 rvm:
-- 2.1
-bundler_args: "--without integration --deployment --retry 3"
-before_script:
-- bundle exec berks
+- 2.2
+before_install:
+- openssl aes-256-cbc -K $encrypted_99629d8cfdd8_key -iv $encrypted_99629d8cfdd8_iv
+  -in travis_ci_ec2.pem.enc -out ~/.ssh/travis_ci_ec2.pem -d
+- chef --version
+- eval "$(chef shell-init bash)"
+- rubocop --version
+- foodcritic --version
+install:
+- chef gem install kitchen-ec2
+- berks
 script:
-- bundle exec rake travis
+- rubocop
+- foodcritic .
+- chef exec rspec
+- kitchen test -d always -c
+notifications:
+  slack:
+    secure: Zd6OwSWvG+R5uD6gNDZ27g+w8grBW2ULKU3tb7xdTQWxXmRFnzGlFtk1n4wopOPx3WcYTM24H/pWezuRiXn37CtGB25MZV58eAScnHCJBejGjxtpo9jNZG7WI+kSagr0a6l33fcqk1aOQ9xQlNAXPeK8+GHuyEYPDaKiyGg63GRF2r6BstOwUnnB7EdNbB89KEnrF2GjpHU9zE881JolxlJZiSsKoKDmubLiFe73QC//+am4M6JVES62Fs8O17nGxozzpvb1JSob5JeFdvdZMqavO8yhL/JstYuOnWc5cpB8CY9VYln30YPfImxRy/4erCKOuouw5Zp9k7svgwNjBFb/ZTXLi3M25wezOdo0rqjSaEbXOWSwnhB8F3SALIOq+AbOMvmHM4/0XCJaAQsFMH/p8D1iFsnpze4hFqauXHqahl0cFJuXj6ACAzEHncMmNskjO+WQHxxXaaKG9k5+lgB3mcjnpna4YfUxqP3808LB4talhs4nvAEfJuDzqJhNFme3MkIh5qCqWEpsX07BNMegxWwp+q6Q2X5LHzjZxvCzfboEke9H2+dYur+KJgEz1SzuFM42jw2pS4DAV4AiN8eM7KFET/14Hvx+itz2TJotXnLusAzUhoe3Qa/pIK7UsTwPcFNxelM/ZwMKIuBmYmYvYXhZhqSjngoQs6NooLk=
+env:
+  global:
+  - secure: KGqEJoHLv8eiEkdS3XjRkGN7a1lS/dpj2SnBMuvGAD6dXmVLXl3h3NKBTgtNQnMV4ISFGEnuOylok3/Pr2lKwRqH3bJPYiBDp7/2ZQJzPJHTPDpHjY78i2LkzznD4+TshEntJW56P7RZe4XFNN1AZ1w+LHodslB36gpJ9aouVyyi6t0dCxERaZSQmoSnakdE6/tqSz2HUoXeuieJmvUE6324Xby3WMkLcOOqlycNBxqrnexXjucnPFQSjzJP8zAYIHqT9QWxr0rcydm6/qfeUAHrUq81DFavvrpred1ny8fGRCkT0ey15o+gHN8HpnGa0RaxAFOF3ArO7MVZ6UDhrlrgdVNrFQQF1rhJLHDpsbEkgGQuRFzO2H2oEAp03+Y/boAJ4kk74cvfk1Tj2bvXaDtCAfuQU4FEhsqmtspOxAiVVSkBlNLs9R85GI380eEfVZZwV15127Z/gsV7ytSOmaVs8CPNRDYVb+BQRgloNScip9peRIjk7Un6AzpRG4yclqOjkUGf5Q3KaI48yxU0ca0NmuXZumHS4T6tpAbKbOi3pLdR/7/Ac+SK1caiebopo50nXhLEdTX3vY2ZFGK6nwxl14lD/FMkhDu6cN07C60iLE2EsnpBVHmrmw0oow4yT7H4Bu16VcFUWbnLFkFwwHkNFo+fNej91EDi/GUlM28=
+  - secure: pbM66V4bveH7YrNNDpjHpWRjxe8TB8XdXKiBiFvMdcrgb71KZcUyKgmr1CgWBwo4LcU58WGBbOD/Li9yioFeevPjsuqIFnfOU7k/sbgw3HLuXV4X4ESKzfoHTxjTUJpdckVElI3LoefuFVd43/0Vxpbg7V3ujjW+Z19wq3lp5LBVSQzmhtxvaQ9s2T6iBCS2+YvW3yhBITogWIxJj26NObCsqmd3L+OWoTN8SZ73fkGVzFovvodfYxgCRHbevBi2nFFKxfsyHAoIiTxl8frXP1Fm9cybQ5wb0VyHSNxKvsJaKNdeBQEvnMVfFogzrYm0spRdIo/qzhQ6R3VtRBblQ4d1l+JbQbjSHs6laXrGZ+xtOUvMU89ie8cvQioFynxNy4v29Yenw6+n7C2blUmS86uXplF/kN5hAQyeHHHjifFMXEqq+2yzMprz+paIDFZdgAs8cyFrMo1kR4d1D+6HMWeq5Gj8D/5Ks17SOrZVgJLAMyNfPgK8ytOUHJWvM0DRql8+59Gyx+dIKVqJLqTH14P8r2z5ouoL0Hr++NiZLV/ZzaR69zgOgH3H2w62T33LnU6l8XEA3kPT+lHC4i+mfgywsGECGjrgFT4IpxPGpydWmc6wAq7mMeAgKBhlpk8x5VPxHk8hZjWFAHjtKCOrXClC7ItJgfqeYl/VkynTQ9k=
