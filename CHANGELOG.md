@@ -8,6 +8,14 @@ This is the Changelog for the et_secrets cookbook.
 
 ### Fixes
 
+## v2.0.0 - (2016-04-04)
+
+### Changes
+
+* Migrate Vault code from et_consul back into here
+* Upgrade to Vault 0.5.2, which is breaking due to various changes
+* Use `hashicorp-vault ~> 2.1`
+
 ## v1.0.0 - (2015-09-03)
 
 ### Changes
