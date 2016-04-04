@@ -8,6 +8,10 @@ driver:
     - ci-testing
   instance_type: c3.large
   interface: public
+  tags:
+    Env: public
+    Type: test
+    Operator: <%= ENV['USER'] %>
 
 transport:
   ssh_key: <%= ENV['EC2_SSH_KEY_PATH'] %>
@@ -21,11 +25,11 @@ platforms:
   - name: ubuntu-14.04
     driver_config:
       image_id: ami-9301c7f8
-      tags:
-        Env: public
-        Type: test
 
 suites:
   - name: default
+    driver:
+      tags:
+        Name: et_secrets_default_ubuntu_1404
     run_list:
       - recipe[et_secrets::default]
