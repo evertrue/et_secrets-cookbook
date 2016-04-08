@@ -8,6 +8,12 @@ This is the Changelog for the et_secrets cookbook.
 
 ### Fixes
 
+## v1.0.1 - (2016-04-08)
+
+### Fixes
+
+* Pin `hashicorp-vault` to ~> 1.5
+
 ## v1.0.0 - (2015-09-03)
 
 ### Changes
