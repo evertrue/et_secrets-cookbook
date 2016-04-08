@@ -8,4 +8,4 @@ version          '1.0.0'
 
 supports 'ubuntu', '>= 14.04'
 
-depends 'hashicorp-vault'
+depends 'hashicorp-vault', '~> 1.5'
