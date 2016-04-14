@@ -8,6 +8,13 @@ This is the Changelog for the et_secrets cookbook.
 
 ### Fixes
 
+## v2.0.1 - (2016-04-14)
+
+### Fixes
+
+* Drop specifying `address` in Vault Consul Service definition
+    - Fixes how the Consul DNS works and provides the correct private IP for Vault
+
 ## v2.0.0 - (2016-04-04)
 
 ### Changes
