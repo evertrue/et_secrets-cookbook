@@ -8,7 +8,6 @@ set['et_consul']['client']['definitions']['vault'] = {
   type: 'service',
   parameters: {
     port:  8200,
-    address: '127.0.0.1',
     tags: %w(vault http),
     check: {
       interval: '10s',
