@@ -9,3 +9,4 @@ version          '2.0.1'
 supports 'ubuntu', '>= 14.04'
 
 depends 'hashicorp-vault', '~> 2.1'
+depends 'et_consul', '~> 2.0'
