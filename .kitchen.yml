@@ -36,7 +36,10 @@ suites:
       - recipe[et_consul::server]
       - recipe[et_secrets::default]
       - recipe[et_secrets::vault_init]
+      - recipe[et_secrets::renew_vault_token]
       - recipe[tiny_bind::default]
     attributes:
+      etc_environment:
+        VAULT_ADDR: 'http://localhost:8200'
       et_consul:
         mocking: true
