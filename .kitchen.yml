@@ -38,6 +38,5 @@ suites:
       - recipe[et_secrets::vault_init]
       - recipe[tiny_bind::default]
     attributes:
-      consul:
-        config:
-          bootstrap_expect: 1
+      et_consul:
+        mocking: true
