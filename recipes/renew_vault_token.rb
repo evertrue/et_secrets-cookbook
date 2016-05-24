@@ -17,7 +17,7 @@ ruby_block 'renew vault token' do
 
         case response
         when Net::HTTPSuccess then response
-        when Net::HTTPRedirection then fetch(response['location'], limit - 1)
+        when Net::HTTPRedirection then fetch(response['location'], vault_token, limit - 1)
         else
           Chef::Log.error "Bad response from vault server (#{uri_str}): #{response.code}\n" \
                           "Token: #{vault_token}\n" \
