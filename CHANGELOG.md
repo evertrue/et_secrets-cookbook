@@ -8,6 +8,19 @@ This is the Changelog for the et_secrets cookbook.
 
 ### Fixes
 
+## v2.1.0 - (2016-05-24)
+
+### Changes
+
+* New recipe: `renew_vault_token`
+* Make vault_init a regular recipe (rather than a test cookbook) so that other cookbooks can use it
+
+### Fixes
+
+* Include et_consul dependency (already in use in et_secrets::default)
+* Use sftp transport for test kitchen
+* Use "mocking" instead of "bootstrap_expect" to set bootstrap expect number for consul
+
 ## v2.0.1 - (2016-04-14)
 
 ### Fixes
