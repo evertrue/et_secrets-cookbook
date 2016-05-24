@@ -31,7 +31,7 @@ suites:
   - name: default
     driver:
       tags:
-        Name: et_secrets_default_ubuntu_1404
+        Name: et-secrets-default-ubuntu-1404
     run_list:
       - recipe[et_consul::server]
       - recipe[et_secrets::default]
