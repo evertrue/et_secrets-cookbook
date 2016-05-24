@@ -35,9 +35,11 @@ suites:
     run_list:
       - recipe[et_consul::server]
       - recipe[et_secrets::default]
-      - recipe[vault_init::default]
+      - recipe[et_secrets::vault_init]
+      - recipe[et_secrets::renew_vault_token]
       - recipe[tiny_bind::default]
     attributes:
-      consul:
-        config:
-          bootstrap_expect: 1
+      etc_environment:
+        VAULT_ADDR: 'http://localhost:8200'
+      et_consul:
+        mocking: true

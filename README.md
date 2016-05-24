@@ -22,9 +22,15 @@ Short Description
         - which includes `et_secrets::another`
     * `et_secrets::configure`
 
-## install
+## renew_vault_token
 
-More info about the install recipe
+This recipe renews the Vault token contained in the `secrets/api_keys` data bag item by calling `/auth/tokens/renew-self` on the Vault API. It requires `node['etc_environment']['VAULT_ADDR']` to be set.
+
+## vault_init
+
+Used only during testing. Re-initializes the vault to a like-new state, unseals it and populates `node['et_secrets']['test_token']` with a test token with default privileges.
+
+Never (**ever, ever**) put this recipe in the run list on a real server!!!
 
 # Usage
 
