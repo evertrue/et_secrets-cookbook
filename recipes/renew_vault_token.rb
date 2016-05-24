@@ -7,7 +7,6 @@ ruby_block 'renew vault token' do
       require 'net/http'
 
       def fetch(uri_str, vault_token, limit = 10)
-        # You should choose a better exception.
         raise ArgumentError, 'too many HTTP redirects' if limit == 0
 
         uri = URI uri_str
