@@ -8,6 +8,13 @@ This is the Changelog for the et_secrets cookbook.
 
 ### Fixes
 
+## v2.1.1 - (2016-05-24)
+
+### Fixes
+
+* Handle redirects from vault server
+* No illegal characters in name tags
+
 ## v2.1.0 - (2016-05-24)
 
 ### Changes
