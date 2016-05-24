@@ -8,6 +8,12 @@ This is the Changelog for the et_secrets cookbook.
 
 ### Fixes
 
+## v2.1.2 - (2016-05-24)
+
+### Fixes
+
+* Pass ALL of the arguments to fetch on redirect
+
 ## v2.1.1 - (2016-05-24)
 
 ### Fixes
