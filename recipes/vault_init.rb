@@ -44,7 +44,7 @@ ruby_block 're-initialize and unseal vault' do
 
     req = Net::HTTP::Post.new '/v1/auth/token/create'
     req['X-Vault-Token'] = root_token
-    req.body = { display_name: 'test', policies: %w(default), ttl: '1h' }.to_json
+    req.body = { display_name: 'test', policies: %w(default), ttl: '1000h' }.to_json
     response = http.request req
 
     unless response.code.to_i == 200
@@ -55,6 +55,10 @@ ruby_block 're-initialize and unseal vault' do
     end
 
     parsed_response = JSON.parse(response.body)
+
+    unless parsed_response['auth']['lease_duration'] == 3_600_000
+      raise "Test token TTL was not long enough: #{parsed_response['auth']['lease_duration']}"
+    end
 
     File.open("#{Chef::Config[:file_cache_path]}/test-kitchen_test_token", 'w') do |f|
       f.write parsed_response['auth']['client_token']

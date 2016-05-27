@@ -15,6 +15,8 @@ describe 'et_secrets::default' do
       describe '#content' do
         subject { super().content }
         it { is_expected.to include '"tls_disable": "true"' }
+        it { is_expected.to include '"max_lease_ttl": "8760h"' }
+        it { is_expected.to include '"default_lease_ttl": "720h"' }
         it { is_expected.to match(/"backend": {\s+"consul"/) }
       end
     end
