@@ -30,6 +30,10 @@ ruby_block 're-initialize and unseal vault' do
     unseal_key = parsed_response['keys'].first
     root_token = parsed_response['root_token']
 
+    File.open("#{Chef::Config[:file_cache_path]}/test-kitchen_root_token", 'w') do |f|
+      f.write root_token
+    end
+
     # Unseal the vault
     req = Net::HTTP::Put.new '/v1/sys/unseal'
     req.body = { key: unseal_key }.to_json
