@@ -13,6 +13,10 @@ TODO: Enter the cookbook description here.
 
 ## default
 
+## replace_vault_token
+
+Replace the token at `data_bags: secrets/api_keys/#{ENV}/vault/default` when its TTL reaches 3600 seconds. Possibly a complete replacement for `renew_vault_token`.
+
 Short Description
 
 1. Set up & updates apt using `apt::default`
