@@ -32,16 +32,44 @@ Used only during testing. Re-initializes the vault to a like-new state, unseals 
 
 Never (**ever, ever**) put this recipe in the run list on a real server!!!
 
-# Usage
+# Resources
 
-Include this recipe in a wrapper cookbook:
+## replace_vault_token
 
-```
-depends 'et_secrets', '~> 1.0'
+```ruby
+replace_vault_token 'default' do
+  vault_host "http://vault.service.#{node.chef_environment}-us-east-1.consul:8200"
+  data_bag_name 'secrets'
+  data_bag_item_name 'api_keys'
+  options(
+    ttl: '8670h',
+    policies: %w(default apps)
+  )
+  top_level_key node.chef_environment
+  min_remaining_ttl 3600
+  accessor_token data_bag_name('secrets', 'api_keys')[node.chef_environment]['vault']['worker_token']
+end
 ```
 
-```
-include_recipe 'et_secrets::default'
+#### Properties
+
+* **name** - The name associated with the token in the data bag and in the Vault server metadata.
+* **vault_host** - Self explanatory. E.g. `http://vault.host:8200`
+* **options** - A hash passed verbatim to the Vault token-create API. E.g. `{ policies: ['default', 'apps'] }`
+* **token_to_replace** - A string containing the actual token to replace. If provided, the resource will verify this token against the Vault API instead of trying to use a token from the data bag. If a new token is generated (because the specified token is expired or invalid) it will still be stored in the specified data bag.
+* **accessor_token** - The token to use for processing the request (See **Required Permissions**)
+* **min_remaining_ttl** - If the existing token has less than this many seconds remaining on its TTL, it will be replaced. If unspecified, a new token will be generated each time the resource is run.
+* **data_bag_name** and **data_bag_item_name** - Where to find and store the token.
+* **top_level_key** - The top level key for the path within the data bag for the token that is to be be replaced. E.g.
+```json
+{
+  "id": "your_data_bag",
+  "top_level_key": {
+    "vault": {
+      "default": "YOUR_OLD_KEY"
+    }
+  }
+}
 ```
 
 ## Contributing
