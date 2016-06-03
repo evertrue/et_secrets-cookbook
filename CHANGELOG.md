@@ -8,6 +8,13 @@ This is the Changelog for the et_secrets cookbook.
 
 ### Fixes
 
+## v2.2.0 - (2016-06-03)
+
+### Changes
+
+* New recipe and resource: replace_vault_token
+* Set global max and default lease TTLs
+
 ## v2.1.2 - (2016-05-24)
 
 ### Fixes
