@@ -8,5 +8,5 @@ replace_vault_token 'default' do
   )
   top_level_key node.chef_environment
   min_remaining_ttl 3600
-  accessor_token data_bag_name('secrets', 'api_keys')[node.chef_environment]['vault']['worker_token']
+  accessor_token data_bag_item('secrets', 'api_keys')[node.chef_environment]['vault']['worker_token']
 end
