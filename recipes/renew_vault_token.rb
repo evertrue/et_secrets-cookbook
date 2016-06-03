@@ -12,6 +12,7 @@ ruby_block 'renew vault token' do
         uri = URI uri_str
         req = Net::HTTP::Post.new uri
         req['X-Vault-Token'] = vault_token
+        req.body = { increment: 2_592_000 }.to_json
         req.content_type = 'application/json'
         response = Net::HTTP.start(uri.hostname, uri.port) { |http| http.request req }
 
