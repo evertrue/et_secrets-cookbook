@@ -11,7 +11,10 @@ property :name,               kind_of: String, name_attribute: true
 # A full URL is expected for the vault host.
 # E.g.
 # http://localhost:8200
-property :vault_host,         kind_of: String, required: true
+property :vault_host,
+         kind_of: String,
+         required: true,
+         callbacks: { 'Must be a valid URL' => proc { |p| valid_url p } }
 property :data_bag_name,      kind_of: String, required: true
 property :data_bag_item_name, kind_of: String, required: true
 property :options,            default: {}
@@ -43,6 +46,10 @@ property :top_level_key, kind_of: String, required: true
 # it expires, renewal will not take place. If unset, the token will be
 # replaced every time.
 property :min_remaining_ttl, kind_of: Integer
+
+def self.valid_url(url)
+  url =~ /\A#{URI.regexp(%w(http https))}\z/
+end
 
 def vault
   @vault ||= begin
