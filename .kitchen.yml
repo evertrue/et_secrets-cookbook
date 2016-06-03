@@ -38,6 +38,7 @@ suites:
       - recipe[et_secrets::vault_init]
       - recipe[et_secrets::renew_vault_token]
       - recipe[tiny_bind::default]
+      - recipe[test_replace_vault_token::default]
     attributes:
       etc_environment:
         VAULT_ADDR: 'http://localhost:8200'

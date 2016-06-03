@@ -1,6 +1,7 @@
 require 'spec_helper'
 require 'json'
 require 'net/http'
+require 'vault'
 
 describe 'et_secrets::default' do
   context 'has a running instance of Vault' do
@@ -37,5 +38,26 @@ describe 'et_secrets::default' do
     it 'Consul can resolve Vault with DNS' do
       expect(resolv.getaddress('vault.service.consul.').to_s == my_ip)
     end
+  end
+end
+
+describe 'test_replace_vault_token::default' do
+  let(:vault) do
+    tries = 15
+    until Net::HTTP.get_response(URI('http://127.0.0.1:8200/v1/sys/health')).code.to_i == 200 ||
+          tries == 0
+      # Vault doesn't start up right away. This waits for it to do so.
+      sleep 1
+      tries -= 1
+    end
+    data_bag_item = JSON.parse(File.read('/tmp/kitchen/data_bags/secrets/api_keys.json'))
+    accessor_token = data_bag_item['dev']['vault']['new_token_2']
+    Vault::Client.new address: 'http://localhost:8200', token: accessor_token
+  end
+
+  sleep 20
+
+  it 'generates and saves a valid token' do
+    expect(vault.auth_token.lookup_self.data[:creation_ttl]).to eq 31_212_000
   end
 end
