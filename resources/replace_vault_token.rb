@@ -1,3 +1,9 @@
+#
+# Cookbook Name:: et_secrets
+# Resource:: replace_vault_token
+#
+# Copyright (c) 2016 EverTrue, All Rights Reserved.
+
 resource_name :replace_vault_token
 default_action :renew
 
