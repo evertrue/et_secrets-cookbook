@@ -1,26 +1,26 @@
 # et_secrets [![Build Status](https://travis-ci.org/evertrue/et_secrets-cookbook.svg)](https://travis-ci.org/evertrue/et_secrets-cookbook)
 
-TODO: Enter the cookbook description here.
-
-# Requirements
-
-* `apt` cookbook
-* `some` cookbook
-* `another` cookbook
-
+Handles the installation and setup of various Evertrue-specific stuff related to secrets and Vault.
 
 # Recipes
 
 ## default
 
+Just a wrapper. Installs Vault and Consul client
+
+## renew_vault_token
+
+Renew the token at `data_bags: secrets/api_keys/#{ENV}/vault/default`
+
+## replace_vault_token
+
+Replace the token at `data_bags: secrets/api_keys/#{ENV}/vault/default` when its TTL reaches 3600 seconds. Possibly a complete replacement for `renew_vault_token`.
+
 Short Description
 
-1. Set up & updates apt using `apt::default`
-2. Install xyz by some proccess
-3. Include various recipes for this cookbook:
-    * `et_secrets::install`
-        - which includes `et_secrets::another`
-    * `et_secrets::configure`
+**USE ONLY FOR TESTING!!!**
+
+Completely re-initializes the vault at `http://localhost:8200`, generates a new root token, and saves it to `"#{Chef::Config[:file_cache_path]}/test-kitchen_root_token"`. Also generates a client token (for testing) and saves it to `"#{Chef::Config[:file_cache_path]}/test-kitchen_test_token"`. **ALL EXISTING VAULT DATA WILL BE ERASED!!!**
 
 ## renew_vault_token
 
