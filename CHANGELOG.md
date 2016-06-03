@@ -8,6 +8,12 @@ This is the Changelog for the et_secrets cookbook.
 
 ### Fixes
 
+## v2.2.1 - (2016-06-03)
+
+### Fixes
+
+* Replace data_bag_name/data_bag_item
+
 ## v2.2.0 - (2016-06-03)
 
 ### Changes
