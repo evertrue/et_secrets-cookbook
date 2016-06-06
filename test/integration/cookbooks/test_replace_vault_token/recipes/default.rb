@@ -1,5 +1,5 @@
-replace_vault_token 'just the resource name' do
-  name 'new_token'
+replace_vault_token 'non-expired test token' do
+  token_name 'new_token'
   vault_host 'http://localhost:8200'
   data_bag_name 'vault'
   data_bag_item_name 'tokens'
@@ -25,7 +25,8 @@ replace_vault_token 'just the resource name' do
   end)
 end
 
-replace_vault_token 'new_token_2' do
+replace_vault_token 'replace every time test token' do
+  token_name 'new_token_2'
   vault_host 'http://localhost:8200'
   data_bag_name 'vault'
   data_bag_item_name 'tokens'

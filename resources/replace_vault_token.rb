@@ -7,7 +7,7 @@
 resource_name :replace_vault_token
 default_action :renew
 
-property :name,               kind_of: String, name_attribute: true
+property :token_name,               kind_of: String, name_attribute: true
 # A full URL is expected for the vault host.
 # E.g.
 # http://localhost:8200
@@ -70,7 +70,7 @@ action :renew do
   chef_gem 'vault'
   db = data_bag_item(data_bag_name, data_bag_item_name)
   begin
-    token_string = token_to_replace || db[top_level_key]['vault'][name]
+    token_string = token_to_replace || db[top_level_key]['vault'][token_name]
     if token_string
       Chef::Log.debug 'Existing token found in data bags. Looking it up in Vault.'
       existing_token = vault.auth_token.lookup token_string
@@ -92,7 +92,7 @@ action :renew do
      property_is_set?(:min_remaining_ttl) &&
      existing_token.data[:ttl] < min_remaining_ttl
     Chef::Log.debug 'Token does not exist, is invalid, or has expired. Requesting a new one.'
-    db[top_level_key]['vault'][name] = new_token.auth[:client_token]
+    db[top_level_key]['vault'][token_name] = new_token.auth[:client_token]
     db.save
     new_resource.updated_by_last_action true
   else
