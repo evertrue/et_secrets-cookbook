@@ -1,7 +1,8 @@
-replace_vault_token 'new_token' do
+replace_vault_token 'just the resource name' do
+  name 'new_token'
   vault_host 'http://localhost:8200'
-  data_bag_name 'secrets'
-  data_bag_item_name 'api_keys'
+  data_bag_name 'vault'
+  data_bag_item_name 'tokens'
   options(
     ttl: '8670h',
     policies: %w(default)
@@ -26,8 +27,8 @@ end
 
 replace_vault_token 'new_token_2' do
   vault_host 'http://localhost:8200'
-  data_bag_name 'secrets'
-  data_bag_item_name 'api_keys'
+  data_bag_name 'vault'
+  data_bag_item_name 'tokens'
   options(
     ttl: '8670h',
     policies: %w(default)

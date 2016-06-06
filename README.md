@@ -10,15 +10,15 @@ Just a wrapper. Installs Vault and Consul client
 
 ## renew_vault_token
 
-Renew the token at `data_bags: secrets/api_keys/#{ENV}/vault/default`
+Renew the token at `data_bags: vault/tokens/#{ENV}/vault/default`
 
 ## replace_vault_token
 
-Replace the token at `data_bags: secrets/api_keys/#{ENV}/vault/default` when its TTL reaches 3600 seconds. Possibly a complete replacement for `renew_vault_token`.
+Replace the token at `data_bags: vault/tokens/#{ENV}/vault/default` when its TTL reaches 3600 seconds. Possibly a complete replacement for `renew_vault_token`.
 
 ## replace_vault_token
 
-Replace the token at `data_bags: secrets/api_keys/#{ENV}/vault/default` when its TTL reaches 3600 seconds. Possibly a complete replacement for `renew_vault_token`.
+Replace the token at `data_bags: vault/tokens/#{ENV}/vault/default` when its TTL reaches 3600 seconds. Possibly a complete replacement for `renew_vault_token`.
 
 Short Description
 
@@ -28,7 +28,7 @@ Completely re-initializes the vault at `http://localhost:8200`, generates a new 
 
 ## renew_vault_token
 
-This recipe renews the Vault token contained in the `secrets/api_keys` data bag item by calling `/auth/tokens/renew-self` on the Vault API. It requires `node['etc_environment']['VAULT_ADDR']` to be set.
+This recipe renews the Vault token contained in the `vault/tokens` data bag item by calling `/auth/tokens/renew-self` on the Vault API. It requires `node['etc_environment']['VAULT_ADDR']` to be set.
 
 ## vault_init
 
@@ -43,15 +43,15 @@ Never (**ever, ever**) put this recipe in the run list on a real server!!!
 ```ruby
 replace_vault_token 'default' do
   vault_host "http://vault.service.#{node.chef_environment}-us-east-1.consul:8200"
-  data_bag_name 'secrets'
-  data_bag_item_name 'api_keys'
+  data_bag_name 'vault'
+  data_bag_item_name 'tokens'
   options(
     ttl: '8670h',
     policies: %w(default apps)
   )
   top_level_key node.chef_environment
   min_remaining_ttl 3600
-  accessor_token data_bag_name('secrets', 'api_keys')[node.chef_environment]['vault']['worker_token']
+  accessor_token data_bag_name('vault', 'tokens')[node.chef_environment]['vault']['worker_token']
 end
 ```
 

@@ -1,5 +1,5 @@
 # The first value here should only actually be used during testing
-vault_token = data_bag_item('secrets', 'api_keys')[node.chef_environment]['vault']['default']
+vault_token = data_bag_item('vault', 'tokens')[node.chef_environment]['vault']['default']
 
 ruby_block 'renew vault token' do
   block do

@@ -50,7 +50,7 @@ describe 'test_replace_vault_token::default' do
       sleep 1
       tries -= 1
     end
-    data_bag_item = JSON.parse(File.read('/tmp/kitchen/data_bags/secrets/api_keys.json'))
+    data_bag_item = JSON.parse(File.read('/tmp/kitchen/data_bags/vault/tokens.json'))
     accessor_token = data_bag_item['dev']['vault']['new_token_2']
     Vault::Client.new address: 'http://localhost:8200', token: accessor_token
   end
