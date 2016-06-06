@@ -8,6 +8,13 @@ This is the Changelog for the et_secrets cookbook.
 
 ### Fixes
 
+## v2.2.2 - (2016-06-06)
+
+### Fixes
+
+* Allow replacement token name to be different than replace_vault_token resource name
+* Move vault tokens to a separate data bag location to deal with lack of source control
+
 ## v2.2.1 - (2016-06-03)
 
 ### Fixes
