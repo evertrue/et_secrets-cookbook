@@ -28,6 +28,9 @@ property :token_to_replace, kind_of: String
 # requires the "create" capability on the "auth/token/create" path
 property :accessor_token, kind_of: String, required: true
 
+# Enable Pagerduty alerting when token is about to expire
+property :pagerduty_key, kind_of: String
+
 # The top level key for the path within the data bag for the token that
 # is to be be replaced.
 
@@ -54,12 +57,29 @@ end
 def vault
   @vault ||= begin
     require 'vault'
+    require 'pagerduty' if pagerduty_key
 
     v = Vault::Client.new address: vault_host, token: accessor_token
-    return v unless (ttl = v.auth_token.lookup_self.data[:ttl]) < (3_600 * 24 * 3) &&
-                    ttl != 0
-    raise "My accessor token expires in #{ttl} seconds"
+    if (ttl = v.auth_token.lookup_self.data[:ttl]) < (3_600 * 24 * 3) && ttl != 0
+      Chef::Log.warn "The accessor token for #{token_name} expires in #{ttl} seconds"
+      alert_token_expiring ttl if pagerduty_key
+    end
+    v
   end
+end
+
+def alert_token_expiring(ttl)
+  msg = "The accessor token used for replacing #{token_name} expires in less than 3 days. " \
+    'Please replace this token with a new one using the token/create API.'
+  pd = Pagerduty.new pagerduty_key
+  pd.trigger(
+    msg,
+    incident_key: "accessor token for #{token_name} expiring soon",
+    client: node.name,
+    details: {
+      ttl: ttl
+    }
+  )
 end
 
 def new_token
@@ -68,6 +88,7 @@ end
 
 action :renew do
   chef_gem 'vault'
+  chef_gem 'pagerduty' if pagerduty_key
   db = data_bag_item(data_bag_name, data_bag_item_name)
   begin
     token_string = token_to_replace || db[top_level_key]['vault'][token_name]
