@@ -69,7 +69,8 @@ def vault
 end
 
 def alert_token_expiring(ttl)
-  msg = "The accessor token used for replacing #{token_name} expires in less than 3 days"
+  msg = "The accessor token used for replacing #{token_name} expires in less than 3 days. " \
+    'Please replace this token with a new one using the token/create API.'
   pd = Pagerduty.new pagerduty_key
   pd.trigger(
     msg,
