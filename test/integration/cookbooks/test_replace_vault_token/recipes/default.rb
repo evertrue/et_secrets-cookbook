@@ -34,7 +34,6 @@ replace_vault_token 'expiring accessor token' do
   accessor_token(lazy do
     File.read "#{Chef::Config[:file_cache_path]}/test-kitchen_short_lived_worker_token"
   end)
-  pagerduty_key data_bag_item('secrets', 'api_keys')['pagerduty']['replace_vault_token']
 end
 
 replace_vault_token 'non-expired test token' do
