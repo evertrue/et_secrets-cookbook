@@ -8,6 +8,12 @@ This is the Changelog for the et_secrets cookbook.
 
 ### Fixes
 
+## v2.3.1 - (2016-07-07)
+
+### Fixes
+
+* Fix saving of encrypted data bag
+
 ## v2.3.0 - (2016-07-07)
 
 ### Changes
