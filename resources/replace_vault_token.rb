@@ -107,7 +107,7 @@ end
 action :renew do
   chef_gem 'vault'
   chef_gem 'pagerduty' if pagerduty_key
-  db = data_bag_item(data_bag_name, data_bag_item_name)
+  db = data_bag_item(data_bag_name, data_bag_item_name).to_hash
   begin
     token_string = token_to_replace || db[top_level_key]['vault'][token_name]
     if token_string
@@ -130,9 +130,12 @@ action :renew do
      !property_is_set?(:min_remaining_ttl) ||
      property_is_set?(:min_remaining_ttl) &&
      existing_token.data[:ttl] < min_remaining_ttl
-    Chef::Log.debug 'Token does not exist, is invalid, or has expired. Requesting a new one.'
+    Chef::Log.debug(
+      'Token does not exist, is invalid, or has expired. Requesting a new ' \
+      "one with name #{token_name} and options: #{options.inspect}."
+    )
     db[top_level_key]['vault'][token_name] = new_token.auth[:client_token]
-    data_bag_save db.to_hash
+    data_bag_save db
     new_resource.updated_by_last_action true
   else
     Chef::Log.debug 'Token exists and is not expired. Doing nothing.'
