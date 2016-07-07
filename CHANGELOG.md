@@ -8,6 +8,16 @@ This is the Changelog for the et_secrets cookbook.
 
 ### Fixes
 
+## v2.3.2 - (2016-07-07)
+
+### Changes
+
+* Test that encrypted data bag insertion occurred with an actual encrypted data bag
+
+### Fixes
+
+* Encrypted data bag save: Convert source data bag item to hash earlier in the process
+
 ## v2.3.1 - (2016-07-07)
 
 ### Fixes
