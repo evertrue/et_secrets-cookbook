@@ -86,6 +86,24 @@ def new_token
   vault.auth_token.create options
 end
 
+def secret
+  @secret ||= begin
+    key_paths = %w(
+      /etc/chef/encrypted_data_bag_secret
+      /tmp/kitchen/encrypted_data_bag_secret
+    )
+    key_path = key_paths.find { |kp| ::File.exist? kp }
+    ::File.read(key_path).chomp
+  end
+end
+
+def data_bag_save(item_json)
+  encrypted_new_item = Chef::EncryptedDataBagItem.encrypt_data_bag_item(item_json, secret)
+  new_item = Chef::DataBagItem.from_hash(encrypted_new_item)
+  new_item.data_bag(data_bag_name)
+  new_item.save
+end
+
 action :renew do
   chef_gem 'vault'
   chef_gem 'pagerduty' if pagerduty_key
@@ -114,7 +132,7 @@ action :renew do
      existing_token.data[:ttl] < min_remaining_ttl
     Chef::Log.debug 'Token does not exist, is invalid, or has expired. Requesting a new one.'
     db[top_level_key]['vault'][token_name] = new_token.auth[:client_token]
-    db.save
+    data_bag_save db.to_hash
     new_resource.updated_by_last_action true
   else
     Chef::Log.debug 'Token exists and is not expired. Doing nothing.'
