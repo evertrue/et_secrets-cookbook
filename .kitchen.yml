@@ -19,6 +19,7 @@ transport:
 
 provisioner:
   name: chef_zero
+  log_level: debug
   client_rb:
     environment: dev
 
