@@ -8,6 +8,12 @@ This is the Changelog for the et_secrets cookbook.
 
 ### Fixes
 
+## v2.3.0 - (2016-07-07)
+
+### Changes
+
+* Alert PD before token expires
+
 ## v2.2.2 - (2016-06-06)
 
 ### Fixes
