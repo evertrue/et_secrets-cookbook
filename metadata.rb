@@ -8,5 +8,5 @@ version          '2.3.2'
 
 supports 'ubuntu', '>= 14.04'
 
-depends 'hashicorp-vault', '~> 2.1'
+depends 'hashicorp-vault', '= 2.4.0'
 depends 'et_consul', '~> 3.0'
