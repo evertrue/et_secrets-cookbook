@@ -8,6 +8,17 @@ This is the Changelog for the et_secrets cookbook.
 
 ### Fixes
 
+## v3.0.0 - (2016-08-16)
+
+### Breaking
+
+* Pin hashicorp-vault cookbook at exactly v2.4.0 (Includes [some breaking changes](https://www.vaultproject.io/docs/install/upgrade-to-0.6.html))
+
+### Changes
+
+* Set default lease ttl to 1 year
+* Don't pin specific vault version (Allows Vault version to rise to 0.6.0)
+
 ## v2.3.2 - (2016-07-07)
 
 ### Changes
