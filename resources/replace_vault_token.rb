@@ -134,7 +134,12 @@ action :renew do
       'Token does not exist, is invalid, or has expired. Requesting a new ' \
       "one with name #{token_name} and options: #{options.inspect}."
     )
-    db[top_level_key]['vault'][token_name] = new_token.auth[:client_token]
+    begin
+      db[top_level_key]['vault'][token_name] = new_token.auth.client_token
+    rescue => e
+      Chef::Log.fatal "Value of auth: #{new_token.auth.inspect}"
+      raise e
+    end
     data_bag_save db
     new_resource.updated_by_last_action true
   else
