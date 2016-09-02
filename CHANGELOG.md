@@ -8,6 +8,12 @@ This is the Changelog for the et_secrets cookbook.
 
 ### Fixes
 
+## v4.0.0 - (2016-08-16)
+
+### Breaking
+
+* Bump et_consul to 4.0
+
 ## v3.0.0 - (2016-08-16)
 
 ### Breaking
