@@ -17,3 +17,5 @@ set['et_consul']['client']['definitions']['vault'] = {
     }
   }
 }
+
+override['reboot_coordinator']['reboot_permitted'] = false
