@@ -8,6 +8,12 @@ This is the Changelog for the et_secrets cookbook.
 
 ### Fixes
 
+## v4.0.1 - (2016-09-30)
+
+### Fixes
+
+* Do not allow automatic reboots (moved from the `et_consul` cookbook where it didn't belong)
+
 ## v4.0.0 - (2016-08-16)
 
 ### Breaking
