@@ -6,3 +6,5 @@
 
 include_recipe 'hashicorp-vault::default'
 include_recipe 'et_consul::client'
+
+node.override['reboot_coordinator']['reboot_permitted'] = false
