@@ -4,7 +4,7 @@ maintainer_email 'devops@evertrue.com'
 license          'all_rights'
 description      'Installs/Configures et_secrets'
 long_description 'Installs/Configures et_secrets'
-version          '4.0.1'
+version          '4.0.2'
 
 supports 'ubuntu', '>= 14.04'
 
